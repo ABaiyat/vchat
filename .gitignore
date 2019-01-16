@@ -16,6 +16,9 @@
 *.iml
 *.ipr
 
+### Spring Shell Log ###
+spring-shell.log
+
 ### NetBeans ###
 /nbproject/private/
 /build/
