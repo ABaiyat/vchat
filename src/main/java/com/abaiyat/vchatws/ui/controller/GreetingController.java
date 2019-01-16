@@ -7,6 +7,7 @@ import com.abaiyat.vchatws.ui.model.WelcomeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.util.HtmlUtils;
 
@@ -18,9 +19,10 @@ public class GreetingController {
 
     @MessageMapping("/welcome")
     @SendTo("/topic/greetings")
-    public Greeting greeting(WelcomeMessage message) throws Exception {
-        Thread.sleep(10); //Simulated Delay
+    public Greeting addUser(WelcomeMessage message,
+                            SimpMessageHeaderAccessor headerAccessor) throws Exception {
         userRepository.save(new User(message.getName()));
+        headerAccessor.getSessionAttributes().put("username", message.getName());
         return new Greeting("Hello, " + HtmlUtils.htmlEscape(message.getName()) + "!");
     }
 }
