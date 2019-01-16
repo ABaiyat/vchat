@@ -29,11 +29,11 @@ class Welcome extends Component {
         if (this.state.input !== "") {
             this.stomp.send("/app/welcome", {}, JSON.stringify({name: this.state.input}));
         }
-    }
+    };
 
     handleChange = (event) => {
         this.setState({input: event.target.value})
-    }
+    };
 
     render() {
         const greeting = this.state.greeting;
