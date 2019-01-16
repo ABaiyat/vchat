@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Input, Button } from 'semantic-ui-react';
+import { withRouter } from 'react-router-dom';
 import Stomp from 'stomp-websocket';
 
 class Welcome extends Component {
@@ -28,6 +29,9 @@ class Welcome extends Component {
         console.log("CLICKED");
         if (this.state.input !== "") {
             this.stomp.send("/app/welcome", {}, JSON.stringify({name: this.state.input}));
+            setTimeout(() => {
+                this.props.history.push('/rooms');
+            }, 1000);
         }
     };
 
@@ -49,4 +53,4 @@ class Welcome extends Component {
     }
 }
 
-export default Welcome;
+export default withRouter(Welcome);
