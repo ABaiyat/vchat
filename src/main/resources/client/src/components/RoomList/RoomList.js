@@ -16,18 +16,13 @@ class RoomList extends Component {
 
         this.stomp = Stomp.client('ws://localhost:8080/socket/websocket');
         this.stomp.connect({}, () => {
-            console.log("CONNECTED");
             this.stomp.send("/app/rooms", {}, "");
             this.stomp.subscribe('/topic/rooms', (message) => {
-                console.log(message.body);
                 const rooms = message.body.replace(']', '').replace('[', '').replace(/(?:\r\n|\r|\n)/g, ',');
                 const roomArr = rooms.split(',');
-                console.log(typeof rooms);
-                console.log(roomArr);
                 if (roomArr[0] === "") {
                     this.setState({rooms: []})
                 } else {
-                    console.log(roomArr);
                     this.setState({rooms: roomArr.map((value) => parseInt(value))});
                 }
             });
