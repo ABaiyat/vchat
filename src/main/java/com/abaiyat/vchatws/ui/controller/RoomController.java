@@ -2,11 +2,9 @@ package com.abaiyat.vchatws.ui.controller;
 
 import com.abaiyat.vchatws.io.entity.Room;
 import com.abaiyat.vchatws.io.respository.RoomRepository;
-import com.abaiyat.vchatws.ui.model.Greeting;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
@@ -26,7 +24,17 @@ public class RoomController {
         for (Room room :roomRepository.findAll()) {
             stringBuilder.append(room.getRoomID()).append("\n");
         }
-
         this.template.convertAndSend("/topic/rooms", stringBuilder.toString().trim());
+    }
+
+    @MessageMapping("/rooms/{roomID}")
+    public void getRoom(@DestinationVariable("roomID") String roomID) {
+        System.out.println("CHAT ROOM CALLED");
+
+        if (!roomRepository.existsByRoomID(Integer.parseInt(roomID))) {
+            this.template.convertAndSend("/topic/rooms/" + roomID, "THIS ROOM DOES NOT EXIST");
+        } else {
+            this.template.convertAndSend("/topic/rooms/" + roomID, "Hello In Room " + roomID);
+        }
     }
 }
