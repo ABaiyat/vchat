@@ -14,6 +14,8 @@ public class HostCommands {
 
     @ShellMethod("Create a room as a host")
     public String createRoom(String text) {
+        //TODO: Implement logic to create an endpoint with this text
+
         return "A room has been created";
     }
 
