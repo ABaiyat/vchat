@@ -19,6 +19,4 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     public void registerStompEndpoints(StompEndpointRegistry config) {
         config.addEndpoint("/socket").setAllowedOrigins("*").withSockJS();
     }
-
-
 }

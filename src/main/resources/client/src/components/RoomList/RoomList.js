@@ -6,23 +6,44 @@ class RoomList extends Component {
     constructor() {
         super();
         this.state = {
-            rooms: [
-                123,
-                324,
-                126
-            ]
+            greeting: '',
+            rooms: []
         }
+    }
+
+    async componentDidMount() {
+        this.setState({isLoading: true});
+
+        this.stomp = Stomp.client('ws://localhost:8080/socket/websocket');
+        this.stomp.connect({}, () => {
+            console.log("CONNECTED");
+            this.stomp.send("/app/rooms", {}, "");
+            this.stomp.subscribe('/topic/rooms', (message) => {
+                console.log(message.body);
+                const rooms = message.body.replace(']', '').replace('[', '').replace(/(?:\r\n|\r|\n)/g, ',');
+                const roomArr = rooms.split(',');
+                console.log(typeof rooms);
+                console.log(roomArr);
+                if (roomArr[0] === "") {
+                    this.setState({rooms: []})
+                } else {
+                    console.log(roomArr);
+                    this.setState({rooms: roomArr.map((value) => parseInt(value))});
+                }
+            });
+        })
     }
 
     handleItemClick = (key) => {
         console.log(key);
+
     };
 
     render() {
         const { rooms } = this.state;
         const roomList = rooms.map((room) => {
             return (
-                <div key={room}className='roomItem' onClick={() => this.handleItemClick(room)}>
+                <div key={room} className='roomItem' onClick={() => this.handleItemClick(room)}>
                     <h4>{room}</h4>
                     <Divider className='divider'/>
                 </div>

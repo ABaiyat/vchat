@@ -3,6 +3,7 @@ package com.abaiyat.vchatws.shell;
 import com.abaiyat.vchatws.io.entity.Room;
 import com.abaiyat.vchatws.io.respository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
@@ -17,6 +18,9 @@ public class HostCommands {
     @Autowired
     RoomRepository roomRepository;
 
+    @Autowired
+    private SimpMessagingTemplate template;
+
     @ShellMethod("Create a room as a host")
     public String createRoom(int roomID) {
         //TODO: Implement logic to create an endpoint with this text
@@ -26,6 +30,10 @@ public class HostCommands {
             return "Room " + roomIDString + " already exists";
         }
         roomRepository.save(new Room(roomID));
+
+        String rooms = this.listRooms();
+        template.convertAndSend("/topic/rooms", rooms);
+
         return "Room " + roomIDString + " has been created";
     }
 
@@ -34,6 +42,12 @@ public class HostCommands {
         String roomIDString = Integer.toString(roomID);
         if (roomRepository.existsByRoomID(roomID)) {
             roomRepository.deleteByRoomID(roomID);
+            String rooms = this.listRooms();
+            if (roomRepository.count() == 0) {
+                template.convertAndSend("/topic/rooms", "");
+            } else {
+                template.convertAndSend("/topic/rooms", rooms);
+            }
             return "Now closing Room " + roomIDString;
         }
         return "Room " + roomIDString + " does not exist. No changes were made";
@@ -45,7 +59,7 @@ public class HostCommands {
         if (roomRepository.count() == 0) {
             return "There are currently no chat rooms";
         }
-        for (Room room :roomRepository.findAll()) {
+        for (Room room : roomRepository.findAll()) {
             stringBuilder.append(room.getRoomID()).append("\n");
         }
         return stringBuilder.toString().trim();
