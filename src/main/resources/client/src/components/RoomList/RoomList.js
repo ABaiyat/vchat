@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Input, Button, Card, Divider } from 'semantic-ui-react';
+import { Card, Divider } from 'semantic-ui-react';
+import { withRouter } from 'react-router-dom';
 import Stomp from 'stomp-websocket';
 
 class RoomList extends Component {
@@ -30,8 +31,7 @@ class RoomList extends Component {
     }
 
     handleItemClick = (key) => {
-        console.log(key);
-
+        this.props.history.push('rooms/' + key.toString());
     };
 
     render() {
@@ -56,4 +56,4 @@ class RoomList extends Component {
     }
 }
 
-export default RoomList;
+export default withRouter(RoomList);
