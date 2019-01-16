@@ -21,7 +21,12 @@ public class GreetingController {
     @SendTo("/topic/greetings")
     public Greeting addUser(WelcomeMessage message,
                             SimpMessageHeaderAccessor headerAccessor) throws Exception {
+        if (userRepository.existsByUsername(message.getName())) {
+            return new Greeting("Error, username is taken");
+        }
+        
         userRepository.save(new User(message.getName()));
+
         headerAccessor.getSessionAttributes().put("username", message.getName());
         return new Greeting("Hello, " + HtmlUtils.htmlEscape(message.getName()) + "!");
     }

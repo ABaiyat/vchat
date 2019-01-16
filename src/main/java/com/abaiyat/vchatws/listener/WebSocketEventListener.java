@@ -1,5 +1,7 @@
 package com.abaiyat.vchatws.listener;
 
+import com.abaiyat.vchatws.io.entity.User;
+import com.abaiyat.vchatws.io.respository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,9 @@ public class WebSocketEventListener {
     @Autowired
     private SimpMessageSendingOperations msgTemplate;
 
+    @Autowired
+    UserRepository userRepository;
+
     @EventListener
     public void handleWebSocketConnectListener(SessionConnectedEvent event) {
         System.out.println("Received a new web socket connection");
@@ -28,6 +33,7 @@ public class WebSocketEventListener {
         String username = (String) headerAccessor.getSessionAttributes().get("username");
         if (username != null) {
             System.out.println("User Disconnected: " + username);
+            userRepository.deleteByUsername(username);
             msgTemplate.convertAndSend("/topic/greetings", "A Disconnect occurred");
         }
     }
