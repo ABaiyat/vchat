@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Input, Button } from 'semantic-ui-react';
-import SockJS from 'sockjs-client';
 import Stomp from 'stomp-websocket';
 
 class Welcome extends Component {
