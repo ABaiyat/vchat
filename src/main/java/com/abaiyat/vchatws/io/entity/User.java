@@ -1,10 +1,12 @@
 package com.abaiyat.vchatws.io.entity;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.io.Serializable;
 
+@Entity
 public class User implements Serializable {
     private static final long serialVersionID = 1L;
 
@@ -14,6 +16,8 @@ public class User implements Serializable {
 
     @Column(nullable = false)
     private String username;
+
+    public User() {}
 
     public User(String username) {
         this.username = username;
