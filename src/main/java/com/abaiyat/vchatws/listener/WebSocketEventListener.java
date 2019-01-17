@@ -17,7 +17,7 @@ public class WebSocketEventListener {
     private static final Logger logger = LoggerFactory.getLogger(WebSocketEventListener.class);
 
     @Autowired
-    private SimpMessageSendingOperations msgTemplate;
+    private SimpMessageSendingOperations template;
 
     @Autowired
     UserRepository userRepository;
@@ -31,10 +31,12 @@ public class WebSocketEventListener {
     public void handleWebSocketDisconnectListener(SessionDisconnectEvent event) {
         StompHeaderAccessor headerAccessor = StompHeaderAccessor.wrap(event.getMessage());
         String username = (String) headerAccessor.getSessionAttributes().get("username");
+        String roomID = (String) headerAccessor.getSessionAttributes().get("roomID");
         if (username != null) {
             System.out.println("User Disconnected: " + username);
             userRepository.deleteByUsername(username);
-            msgTemplate.convertAndSend("/topic/greetings", "A Disconnect occurred");
+            System.out.println("ROOM ID: " + roomID);
+            this.template.convertAndSend("/topic/rooms/" + roomID + "/sendMessage", "A Disconnect occurred");
         }
     }
 }

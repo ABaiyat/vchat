@@ -27,13 +27,27 @@ class ChatRoom extends Component {
         this.stomp.connect({}, () => {
             const roomURL = '/app/rooms/' + roomID;
             const topicURL = '/topic/rooms/' + roomID;
-            this.stomp.send(roomURL, {}, "");
+            this.stomp.send(roomURL, {}, JSON.stringify({name: username}));
             this.stomp.subscribe(topicURL, (message) => {
-                console.log(message);
+                const { messages } = this.state;
+                const messageObject = JSON.parse(message.body);
+                if (messages.length === 0) {
+                    const messageObject = {
+                        sender: 'HOST-SERVER',
+                        content: 'Welcome to Chatroom ' + roomID + '!',
+                        date: 1000,
+                        type: 'CONNECTED'
+                    };
+                    messages.push(messageObject);
+                } else {
+                    messages.push(messageObject);
+                }
+                this.setState({messages});
             });
             this.stomp.subscribe(topicURL + '/sendMessage', (message) => {
                 const { messages } = this.state;
                 const messageObject = JSON.parse(message.body);
+                console.log(messageObject);
                 messages.push(messageObject);
                 this.setState({messages});
             });
