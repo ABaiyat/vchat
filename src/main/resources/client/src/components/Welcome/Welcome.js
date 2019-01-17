@@ -26,8 +26,10 @@ class Welcome extends Component {
     }
 
     handleButton = () => {
-        if (this.state.input !== "") {
-            this.stomp.send("/app/welcome", {}, JSON.stringify({name: this.state.input}));
+        const { input } = this.state;
+        if (input !== "") {
+            this.stomp.send("/app/welcome", {}, JSON.stringify({name: input}));
+            this.props.callback(input);
             setTimeout(() => {
                 this.props.history.push('/rooms');
             }, 1000);

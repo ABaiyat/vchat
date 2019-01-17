@@ -13,10 +13,15 @@ class ChatRoom extends Component {
     }
 
     async componentDidMount() {
+        const { username } = this.props;
         const { pathname } = this.props.location;
         const roomID = pathname.replace('/rooms/', '');
         console.log(roomID);
         this.setState({roomID});
+
+        if (username === '') {
+            this.props.history.push('');
+        }
 
         this.stomp = Stomp.client('ws://localhost:8080/socket/websocket');
         this.stomp.connect({}, () => {
@@ -37,9 +42,10 @@ class ChatRoom extends Component {
 
     handleButton = () => {
         const {roomID, input} = this.state;
+        const { username } = this.props;
         if (input !== "") {
             const message = {
-                sender: 'Bob',
+                sender: username,
                 content: input,
                 date: 1000,
                 type: 'SENT'
@@ -58,7 +64,11 @@ class ChatRoom extends Component {
         console.log(messages);
         const messageList = messages.map((message) => {
             return (
-                <h1>{message.content}</h1>
+                <div>
+                    <h1>{message.content}</h1>
+                    <h2>{message.sender}</h2>
+                </div>
+
             )
         });
         return (

@@ -14,7 +14,11 @@ class RoomList extends Component {
 
     async componentDidMount() {
         this.setState({isLoading: true});
+        const { username } = this.props;
 
+        if (username === '') {
+            this.props.history.push('');
+        }
         this.stomp = Stomp.client('ws://localhost:8080/socket/websocket');
         this.stomp.connect({}, () => {
             this.stomp.send("/app/rooms", {}, "");

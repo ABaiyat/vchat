@@ -8,14 +8,25 @@ import './App.css';
 import 'semantic-ui-css/semantic.min.css'
 
 class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      username: ''
+    }
+  }
+  callback = (data) => {
+    this.setState({username: data});
+  };
+
   render() {
+    const {username} = this.state;
     return (
       <div className="App">
           <BrowserRouter>
             <Switch>
-              <Route exact path="/" component={Welcome} />
-              <Route exact path="/rooms" component={RoomList}/>
-              <Route exact path="/rooms/:roomId" component={ChatRoom}/>
+              <Route exact path="/" component={() => <Welcome callback={this.callback}/>} />
+              <Route exact path="/rooms" component={() => <RoomList username={username}/>} />
+              <Route exact path="/rooms/:roomId" component={(props) => <ChatRoom {...props} username={username}/>} />
             </Switch>
           </BrowserRouter>
       </div>
