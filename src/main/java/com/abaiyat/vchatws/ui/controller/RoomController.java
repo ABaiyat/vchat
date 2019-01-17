@@ -38,6 +38,7 @@ public class RoomController {
         if (!roomRepository.existsByRoomID(Integer.parseInt(roomID))) {
             this.template.convertAndSend("/topic/rooms/" + roomID, "THIS ROOM DOES NOT EXIST");
         } else {
+            headerAccessor.getSessionAttributes().put("username", welcomeMessage.getName());
             headerAccessor.getSessionAttributes().put("roomID", roomID);
             System.out.println("USERNAME IS: " + welcomeMessage.getName());
             Message message = new Message();

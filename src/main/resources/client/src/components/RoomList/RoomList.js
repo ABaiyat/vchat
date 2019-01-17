@@ -48,11 +48,14 @@ class RoomList extends Component {
                 </div>
             )
         });
+        const prompt = (rooms.length === 0 ?
+            'It looks like the host has no open rooms.' :
+            'Select a room to join or start a chat!');
         return (
             <div className='roomList'>
                 <Card centered>
                     <Card.Content className='roomListHeader' header='Room List' />
-                    <Card.Description className='description'>Select a room to join or start a chat!</Card.Description>
+                    <Card.Description className='description'>{prompt}</Card.Description>
                     <Divider className='divider'/>
                     {roomList}
                 </Card>

@@ -2,6 +2,7 @@ package com.abaiyat.vchatws.listener;
 
 import com.abaiyat.vchatws.io.entity.User;
 import com.abaiyat.vchatws.io.respository.UserRepository;
+import com.abaiyat.vchatws.ui.model.Message;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +37,12 @@ public class WebSocketEventListener {
             System.out.println("User Disconnected: " + username);
             userRepository.deleteByUsername(username);
             System.out.println("ROOM ID: " + roomID);
-            this.template.convertAndSend("/topic/rooms/" + roomID + "/sendMessage", "A Disconnect occurred");
+            Message message = new Message();
+            message.setType(Message.MessageType.DISCONNECTED);
+            message.setContent(username + " has disconnected");
+            message.setSender("HOST-SERVER");
+            message.setDate(1001);
+            this.template.convertAndSend("/topic/rooms/" + roomID + "/sendMessage", message);
         }
     }
 }
