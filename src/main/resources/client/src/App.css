@@ -61,6 +61,7 @@
 }
 
 .usersList {
+  padding-top: 8px;
 }
 
 .column {
@@ -68,11 +69,19 @@
   height: 100%;
 }
 
+.chatDivider {
+  margin: 0 !important;
+}
+
+.row {
+  padding-bottom: 0 !important;
+}
+
 .messageContainer {
   overflow: auto;
   background: whitesmoke;
-  height: 77vh;
-  padding-bottom: 12px;
+  height: 80vh;
+  padding-bottom: 8px;
 }
 
 .messageList {
@@ -80,7 +89,7 @@
 }
 
 .chatColumn {
-  height: 98vh;
+  height: 100vh;
 }
 
 .roomHeader {

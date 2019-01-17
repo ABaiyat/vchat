@@ -95,14 +95,14 @@ class ChatRoom extends Component {
 
         return (
             <div className='chatRoom'>
-                <Grid>
+                <Grid divided>
                     <Grid.Row>
-                        <Grid.Column width={5}>
+                        <Grid.Column width={4}>
                             <div className='usersList'>
                                 <h2>Users List</h2>
                             </div>
                         </Grid.Column>
-                        <Grid.Column width={10}>
+                        <Grid.Column width={12}>
                             <div className='chatColumn'>
                                 <Grid.Row>
                                     <div className='roomHeader'>
@@ -112,7 +112,7 @@ class ChatRoom extends Component {
                                         </Header>
                                     </div>
                                 </Grid.Row>
-                                <Divider/>
+                                <Divider className='chatDivider'/>
                                 <div className='messageContainer'>
                                     <MessageList messages={messages} username={username} />
                                     <div ref={messageList => {this.messageList = messageList}} />
