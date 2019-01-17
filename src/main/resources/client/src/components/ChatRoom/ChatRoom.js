@@ -40,6 +40,9 @@ class ChatRoom extends Component {
                 this.stomp.subscribe(topicURL, (message) => {
                     const { messages } = this.state;
                     const messageObject = JSON.parse(message.body);
+                    if (messageObject.type === 'CLOSE') {
+                        this.props.history.push('/rooms');
+                    }
                     if (messages.length === 0) {
                         const messageObject = {
                             sender: 'HOST-SERVER',
