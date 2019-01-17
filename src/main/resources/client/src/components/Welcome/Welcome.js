@@ -26,7 +26,6 @@ class Welcome extends Component {
     }
 
     handleButton = () => {
-        console.log("CLICKED");
         if (this.state.input !== "") {
             this.stomp.send("/app/welcome", {}, JSON.stringify({name: this.state.input}));
             setTimeout(() => {
