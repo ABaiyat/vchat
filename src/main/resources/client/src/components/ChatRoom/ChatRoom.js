@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Input, Button, Icon } from 'semantic-ui-react';
+import { Input, Button, Icon, Header, Divider, Grid } from 'semantic-ui-react';
 import Stomp from 'stomp-websocket';
 import MessageList from '../MessageList/MessageList';
 
@@ -19,6 +19,7 @@ class ChatRoom extends Component {
         const roomID = pathname.replace('/rooms/', '');
         console.log(roomID);
         this.setState({roomID});
+        this.scrollToBottom();
 
         if (username === '') {
             this.props.history.push('');
@@ -55,6 +56,14 @@ class ChatRoom extends Component {
         });
     }
 
+    componentDidUpdate = () => {
+        this.scrollToBottom();
+    };
+
+    scrollToBottom = () => {
+        this.messageList.scrollIntoView({behavior: 'smooth'});
+    };
+
     handleButton = () => {
         const {roomID, input} = this.state;
         const { username } = this.props;
@@ -75,7 +84,7 @@ class ChatRoom extends Component {
     };
 
     render() {
-        const { messages } = this.state;
+        const { messages, roomID } = this.state;
         const { username } = this.props;
         // console.log(messages);
         // const messageList = messages.map((message) => {
@@ -85,11 +94,39 @@ class ChatRoom extends Component {
         // });
 
         return (
-            <div>
-                <h1>ChatRoom</h1>
-                <Input value={this.state.input} action={<Button onClick={this.handleButton}><Icon name='send'/></Button>}
-                    onChange={this.handleChange} placeholder="Type your message..."/>
-                <MessageList messages={messages} username={username} />
+            <div className='chatRoom'>
+                <Grid>
+                    <Grid.Row>
+                        <Grid.Column width={5}>
+                            <div className='usersList'>
+                                <h2>Users List</h2>
+                            </div>
+                        </Grid.Column>
+                        <Grid.Column width={10}>
+                            <div className='chatColumn'>
+                                <Grid.Row>
+                                    <div className='roomHeader'>
+                                        <Header as='h2' icon textAlign='center'>
+                                            <Icon name='users' circular />
+                                            <Header.Content>{'Room ' + roomID}</Header.Content>
+                                        </Header>
+                                    </div>
+                                </Grid.Row>
+                                <Divider/>
+                                <div className='messageContainer'>
+                                    <MessageList messages={messages} username={username} />
+                                    <div ref={messageList => {this.messageList = messageList}} />
+                                </div>
+                                <Grid.Row>
+                                    <Input className='messageBox'
+                                           fluid value={this.state.input} action={<Button onClick={this.handleButton}><Icon name='send'/></Button>}
+                                           onChange={this.handleChange} placeholder="Type your message..."/>
+                                </Grid.Row>
+                            </div>
+                        </Grid.Column>
+                    </Grid.Row>
+                </Grid>
+
             </div>
         )
     }

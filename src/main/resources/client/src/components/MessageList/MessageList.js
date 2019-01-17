@@ -8,7 +8,7 @@ const MessageList = (props) => {
             <MessageItem sender={message.sender} content={message.content} username={username}/>
         )
     });
-    return (<div>{messageList}</div>)
+    return (<div className='messageList'>{messageList}</div>)
 
 };
 

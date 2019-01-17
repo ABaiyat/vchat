@@ -35,16 +35,54 @@
 
 .messageItem {
   margin-bottom: 4px;
-  padding: 0 4px 0 4px;
+  padding: 0 8px 0 8px;
 }
 
 .sentMessage {
   text-align: right;
 }
 
-/*.receivedMessage {*/
-  /*background: blue;*/
-/*}*/
+.receivedMessage {
+  text-align: left;
+}
 
 .serverMessage {
+}
+
+.chatRoom {
+
+}
+
+.messageBox {
+  position:absolute !important;
+  left:0;
+  bottom:0;
+  right:0;
+}
+
+.usersList {
+}
+
+.column {
+  padding: 0 !important;
+  height: 100%;
+}
+
+.messageContainer {
+  overflow: auto;
+  background: whitesmoke;
+  height: 77vh;
+  padding-bottom: 12px;
+}
+
+.messageList {
+  padding-top: 4px;
+}
+
+.chatColumn {
+  height: 98vh;
+}
+
+.roomHeader {
+  padding-top: 16px;
 }
