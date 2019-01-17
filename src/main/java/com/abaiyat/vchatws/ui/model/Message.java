@@ -9,7 +9,8 @@ public class Message {
     public enum MessageType {
         CONNECTED,
         DISCONNECTED,
-        SENT
+        SENT,
+        CLOSE
     }
 
     public MessageType getType() {

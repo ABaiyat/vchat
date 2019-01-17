@@ -2,6 +2,7 @@ package com.abaiyat.vchatws.shell;
 
 import com.abaiyat.vchatws.io.entity.Room;
 import com.abaiyat.vchatws.io.respository.RoomRepository;
+import com.abaiyat.vchatws.ui.model.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.shell.standard.ShellComponent;
@@ -48,6 +49,12 @@ public class HostCommands {
             } else {
                 template.convertAndSend("/topic/rooms", rooms);
             }
+            Message message = new Message();
+            message.setType(Message.MessageType.CLOSE);
+            message.setContent("The HOST has closed the room. Redirecting you to the rooms list");
+            message.setSender("HOST-SERVER");
+            message.setDate(1001);
+            template.convertAndSend("/topic/rooms/" + roomID, message);
             return "Now closing Room " + roomIDString;
         }
         return "Room " + roomIDString + " does not exist. No changes were made";
