@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Input, Button } from 'semantic-ui-react';
+import { Input, Button, Icon } from 'semantic-ui-react';
 import Stomp from 'stomp-websocket';
+import MessageList from '../MessageList/MessageList';
 
 class ChatRoom extends Component {
     constructor() {
@@ -75,24 +76,21 @@ class ChatRoom extends Component {
 
     render() {
         const { messages } = this.state;
-        console.log(messages);
-        const messageList = messages.map((message) => {
-            return (
-                <div>
-                    <h1>{message.content}</h1>
-                    <h2>{message.sender}</h2>
-                </div>
+        const { username } = this.props;
+        // console.log(messages);
+        // const messageList = messages.map((message) => {
+        //     return (
+        //         <MessageItem sender={message.sender} content={message.content} username={username}/>
+        //     )
+        // });
 
-            )
-        });
         return (
             <div>
                 <h1>ChatRoom</h1>
-                <Input value={this.state.input} onChange={this.handleChange} placeholder="Enter your Name..."/>
-                <Button onClick={this.handleButton}>Submit</Button>
-                {messageList}
+                <Input value={this.state.input} action={<Button onClick={this.handleButton}><Icon name='send'/></Button>}
+                    onChange={this.handleChange} placeholder="Type your message..."/>
+                <MessageList messages={messages} username={username} />
             </div>
-
         )
     }
 }

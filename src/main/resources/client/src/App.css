@@ -32,3 +32,19 @@
 .roomList {
   margin-top: 20px;
 }
+
+.messageItem {
+  margin-bottom: 4px;
+  padding: 0 4px 0 4px;
+}
+
+.sentMessage {
+  text-align: right;
+}
+
+/*.receivedMessage {*/
+  /*background: blue;*/
+/*}*/
+
+.serverMessage {
+}
