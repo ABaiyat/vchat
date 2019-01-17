@@ -13,6 +13,10 @@
   color: white;
 }
 
+body {
+  background: whitesmoke !important;
+}
+
 .divider {
   margin: 2px !important;
 }
@@ -46,11 +50,26 @@
   text-align: left;
 }
 
-.serverMessage {
+.welcomeBox {
+  padding-top: 100px;
 }
 
-.chatRoom {
+.roomList {
+  padding-top: 40px;
+}
 
+.roomButton {
+  margin-bottom: 8px !important;
+}
+
+.description {
+  text-align: left;
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+.divider {
+  margin-bottom: 8px !important;
 }
 
 .messageBox {
@@ -62,6 +81,9 @@
 
 .usersList {
   padding-top: 8px;
+  margin-left: 32px;
+  height: 100vh;
+  background: white;
 }
 
 .column {
@@ -94,4 +116,20 @@
 
 .roomHeader {
   padding-top: 16px;
+  color: teal;
+  background: white;
+  padding-bottom: 8px;
+}
+
+.header {
+  margin-bottom: 0 !important;
+}
+
+.userHeader {
+  text-align: left;
+  color: teal !important;
+}
+
+.roomTitle {
+  color: teal;
 }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, Divider } from 'semantic-ui-react';
+import { Card, Button, Divider } from 'semantic-ui-react';
 import { withRouter } from 'react-router-dom';
 import Stomp from 'stomp-websocket';
 
@@ -35,6 +35,7 @@ class RoomList extends Component {
     }
 
     handleItemClick = (key) => {
+        this.stomp.disconnect();
         this.props.history.push('rooms/' + key.toString());
     };
 
@@ -42,9 +43,8 @@ class RoomList extends Component {
         const { rooms } = this.state;
         const roomList = rooms.map((room) => {
             return (
-                <div key={room} className='roomItem' onClick={() => this.handleItemClick(room)}>
-                    <h4>{room}</h4>
-                    <Divider className='divider'/>
+                <div key={room} className='roomItem' >
+                    <Button className='roomButton' color='teal' fluid onClick={() => this.handleItemClick(room)}>{room}</Button>
                 </div>
             )
         });
@@ -52,6 +52,7 @@ class RoomList extends Component {
             <div className='roomList'>
                 <Card centered>
                     <Card.Content className='roomListHeader' header='Room List' />
+                    <Card.Description className='description'>Select a room to join or start a chat!</Card.Description>
                     <Divider className='divider'/>
                     {roomList}
                 </Card>

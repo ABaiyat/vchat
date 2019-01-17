@@ -9,7 +9,6 @@ const MessageList = (props) => {
         )
     });
     return (<div className='messageList'>{messageList}</div>)
-
 };
 
 export default MessageList;
