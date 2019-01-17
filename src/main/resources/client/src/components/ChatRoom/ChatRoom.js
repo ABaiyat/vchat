@@ -7,7 +7,8 @@ class ChatRoom extends Component {
         super();
         this.state = {
             input: '',
-            roomID: ''
+            roomID: '',
+            messages: []
         }
     }
 
@@ -26,7 +27,10 @@ class ChatRoom extends Component {
                 console.log(message);
             });
             this.stomp.subscribe(topicURL + '/sendMessage', (message) => {
-                console.log(message);
+                const { messages } = this.state;
+                const messageObject = JSON.parse(message.body);
+                messages.push(messageObject);
+                this.setState({messages});
             });
         });
     }
@@ -41,6 +45,7 @@ class ChatRoom extends Component {
                 type: 'SENT'
             };
             this.stomp.send('/app/rooms/' + roomID + '/sendMessage', {}, JSON.stringify(message));
+            this.setState({input: ''})
         }
     };
 
@@ -49,11 +54,19 @@ class ChatRoom extends Component {
     };
 
     render() {
+        const { messages } = this.state;
+        console.log(messages);
+        const messageList = messages.map((message) => {
+            return (
+                <h1>{message.content}</h1>
+            )
+        });
         return (
             <div>
                 <h1>ChatRoom</h1>
                 <Input value={this.state.input} onChange={this.handleChange} placeholder="Enter your Name..."/>
                 <Button onClick={this.handleButton}>Submit</Button>
+                {messageList}
             </div>
 
         )
