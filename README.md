@@ -74,6 +74,9 @@ will be notified of this user leaving. Clients can also exchange their own messa
 If clients are in a room that a host closes, those clients will be redirected to the
 room list.
 
+To Simulate multiple users, open a different browser tab and join the application as a 
+different user;
+
 #### Tech Stack
 The backend of this application was built with `Spring Boot`. `H2` was used
 as an in-memory solution for rapid development to persist the rooms that are created
