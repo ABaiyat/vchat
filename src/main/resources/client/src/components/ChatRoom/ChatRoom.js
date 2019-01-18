@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Input, Button, Icon, Header, Divider, Grid, List } from 'semantic-ui-react';
+import { Input, Button, Icon, Header, Divider } from 'semantic-ui-react';
 import Stomp from 'stomp-websocket';
 import MessageList from '../MessageList/MessageList';
 
@@ -10,15 +10,7 @@ class ChatRoom extends Component {
             input: '',
             roomID: '',
             messages: [],
-            usersList: [{
-                key: 0,
-                name: 'John'
-            }, {
-                key: 1,
-                name: 'Jacob'
-            } ]
         };
-
     }
 
     async componentDidMount() {
@@ -95,63 +87,29 @@ class ChatRoom extends Component {
     };
 
     render() {
-        const { messages, roomID, usersList } = this.state;
+        const { messages, roomID } = this.state;
         const { username } = this.props;
-        // console.log(messages);
-        // const messageList = messages.map((message) => {
-        //     return (
-        //         <MessageItem sender={message.sender} content={message.content} username={username}/>
-        //     )
-        // });
-        const usersListMapping = usersList.map((item) => {
-           return (
-               <List.Item key={item.key}>
-                   <List.Icon name='user circle outline' size='big' verticalAlign='middle' />
-                   <List.Content>
-                       <List.Header color='teal' className='userHeader' as='h2'>{item.name}</List.Header>
-                   </List.Content>
-               </List.Item>
-           )
-        });
         return (
             <div className='chatRoom'>
-                <Grid divided>
-                    <Grid.Row>
-                        <Grid.Column width={4}>
-                            <div className='usersList'>
-                                <List divided>
-                                    {usersListMapping}
-                                </List>
-                            </div>
-                        </Grid.Column>
-                        <Grid.Column width={12}>
-                            <div className='chatColumn'>
-                                <Grid.Row>
-                                    <div className='roomHeader'>
-                                        <Header as='h2' icon textAlign='center'>
-                                            <Icon name='users' color='black' circular />
-                                            <Header.Content className='roomTitle'>{'ROOM ' + roomID}</Header.Content>
-                                        </Header>
-                                    </div>
-                                </Grid.Row>
-                                <Divider className='chatDivider'/>
-                                <div className='messageContainer'>
-                                    <MessageList messages={messages} username={username} />
-                                    <div ref={messageList => {this.messageList = messageList}} />
-                                </div>
-                                <Grid.Row>
-                                    <Input className='messageBox'
-                                           fluid value={this.state.input}
-                                           action={
-                                               <Button color='teal' onClick={this.handleButton}><Icon name='send'/></Button>
-                                           }
-                                           onChange={this.handleChange} placeholder="Type your message..."/>
-                                </Grid.Row>
-                            </div>
-                        </Grid.Column>
-                    </Grid.Row>
-                </Grid>
-
+                <div>
+                    <div className='chatColumn'>
+                        <div className='roomHeader'>
+                            <Header as='h2' icon textAlign='center'>
+                                <Icon name='users' color='black' circular />
+                                <Header.Content className='roomTitle'>{'ROOM ' + roomID}</Header.Content>
+                            </Header>
+                        </div>
+                        <Divider className='chatDivider'/>
+                        <div className='messageContainer'>
+                            <MessageList messages={messages} username={username} />
+                            <div ref={messageList => {this.messageList = messageList}} />
+                        </div>
+                        <Input className='messageBox'
+                               fluid value={this.state.input}
+                               action={<Button color='teal' onClick={this.handleButton}><Icon name='send'/></Button>}
+                               onChange={this.handleChange} placeholder="Type your message..."/>
+                    </div>
+                </div>
             </div>
         )
     }
