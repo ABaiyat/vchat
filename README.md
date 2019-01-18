@@ -80,3 +80,7 @@ as an in-memory solution for rapid development to persist the rooms that are cre
 by the host. `WebSocket` and `STOMP` were used for real-time messages.
 
 The frontend was built with `React`, using `semantic-ui-react` for UI components. 
+It can be viewed in the following directory:
+```
+src/main/resources/client
+```
