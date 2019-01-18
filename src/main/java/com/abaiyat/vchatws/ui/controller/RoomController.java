@@ -40,7 +40,6 @@ public class RoomController {
         } else {
             headerAccessor.getSessionAttributes().put("username", welcomeMessage.getName());
             headerAccessor.getSessionAttributes().put("roomID", roomID);
-            System.out.println("USERNAME IS: " + welcomeMessage.getName());
             Message message = new Message();
             message.setType(Message.MessageType.CONNECTED);
             message.setContent(welcomeMessage.getName() + " has joined the chatroom");
