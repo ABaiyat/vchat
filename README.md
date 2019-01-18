@@ -3,8 +3,8 @@
 ## A Full Stack Chatroom Application
 
 ### Instructions
-Clone this repository and run it from an IDE. In the running console, you can run a 
-few different commands as the host. Once the application is running, it can be viewed
+Clone this repository, build the project, and run it from an IDE. In the running console, you can 
+run a few different commands as the host. Once the application is running, it can be viewed
 on port `8080`.
 
 ```
