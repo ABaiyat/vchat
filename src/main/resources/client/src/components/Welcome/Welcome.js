@@ -14,15 +14,7 @@ class Welcome extends Component {
 
     async componentDidMount() {
         this.setState({isLoading: true});
-
         this.stomp = Stomp.client('ws://localhost:8080/socket/websocket');
-        // this.stomp.connect({}, () => {
-        //     console.log("CONNECTED");
-        //     this.stomp.subscribe('/topic/greetings', (greeting) => {
-        //         const message = JSON.parse(greeting.body);
-        //         this.setState({greeting: message.content});
-        //     });
-        // });
     }
 
     handleButton = () => {
@@ -31,7 +23,6 @@ class Welcome extends Component {
             this.stomp.send("/app/welcome", {}, JSON.stringify({name: input}));
             this.props.callback(input);
             const greeting = 'Greetings, ' + input + '!';
-            console.log({greeting});
             this.setState({greeting});
             this.stomp.disconnect();
             setTimeout(() => {
@@ -45,8 +36,6 @@ class Welcome extends Component {
     };
 
     render() {
-        const { greeting } = this.state;
-        console.log(greeting);
         return (
             <div className='bodyWrapper'>
                 <div className='welcomeBox'>
@@ -65,14 +54,6 @@ class Welcome extends Component {
                     </Card>
                 </div>
             </div>
-
-            // <div>
-            //     <h1>Welcome</h1>
-            //
-            //     <Button onClick={this.handleButton}>Submit</Button>
-            //     <h2>{greeting}</h2>
-            // </div>
-
         )
     }
 }

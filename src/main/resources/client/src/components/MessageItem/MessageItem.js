@@ -2,18 +2,15 @@ import React from 'react';
 import { Message } from 'semantic-ui-react';
 
 const MessageItem = (props) => {
-    const { sender, content, date, username } = props;
+    const { sender, content, username } = props;
     let messageType;
     let color;
     let header = <React.Fragment />;
-    let compact = true;
     if (sender === username) {
         messageType = 'sentMessage';
-        const sender = '';
         color='white'
     } else if (sender === 'HOST-SERVER') {
         messageType = 'serverMessage';
-        compact = false;
         color='teal'
     } else {
         messageType = 'receivedMessage';

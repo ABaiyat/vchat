@@ -17,7 +17,6 @@ class ChatRoom extends Component {
         const { username } = this.props;
         const { pathname } = this.props.location;
         const roomID = pathname.replace('/rooms/', '');
-        console.log(roomID);
         this.setState({roomID});
         this.scrollToBottom();
 
@@ -51,7 +50,6 @@ class ChatRoom extends Component {
                 this.stomp.subscribe(topicURL + '/sendMessage', (message) => {
                     const { messages } = this.state;
                     const messageObject = JSON.parse(message.body);
-                    console.log(messageObject);
                     messages.push(messageObject);
                     this.setState({messages});
                 });
